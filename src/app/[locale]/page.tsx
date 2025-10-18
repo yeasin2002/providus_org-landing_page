@@ -1,3 +1,6 @@
+import Footer from "@/components/footer/footer";
+import { HeroSection } from "@/components/home/hero-section";
+import { Navbar } from "@/components/navbar/navbar";
 import { useTranslations } from "next-intl";
 
 export default function Home() {
@@ -5,11 +8,7 @@ export default function Home() {
 
   return (
     <div>
-      <p>Hello</p>
-      <div>
-        <h1>text: </h1>
-        <p>{t("title")}</p>
-      </div>
+      <HeroSection />
     </div>
   );
 }
