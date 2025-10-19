@@ -3,15 +3,7 @@ import { ArrowRight, Star } from "lucide-react";
 import star from "../../../public/assets/star.png";
 import bgImg from "../../../public/assets/background.jpg";
 import { CTAButton } from "../reUsabale/buttons";
-import Why from "./why-pastors-section";
-import HowItWorksSection from "./how-it-works-section";
-import { Benefits } from "./benefits";
-import { Stories } from "./stories-pastors";
-import FellowshipHonorsSection from "./fellowship";
-import FAQSection from "./faq-section";
-import VisionHeroSection from "./vision-hero-section";
-import { SpecialOpportunitySection } from "./opputunity/oppurtunity-main";
-import FinalCallSection from "./final-call-section";
+
 
 export const HeroSection = () => {
   return (
@@ -52,15 +44,7 @@ export const HeroSection = () => {
         </div>
         <Image src={star} alt="star" className="ml-3" />
       </div>
-      <Why />
-      <HowItWorksSection />
-      <Benefits />
-      <Stories />
-      <FellowshipHonorsSection />
-      <FAQSection />
-      <VisionHeroSection />
-      <SpecialOpportunitySection />
-      <FinalCallSection />
+     
     </div>
   );
 };
