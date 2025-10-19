@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import logo from "../../../public/assets/logo2.svg";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,33 +17,21 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="absolute top-4  z-50 w-full bg-transparent py-6">
+    <nav className="absolute top-4  w-full z-50 bg-transparent py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none">
-                <circle
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="#000"
-                  strokeWidth="1.5"
-                />
-                <path d="M12 6v12M8 10h8" stroke="#000" strokeWidth="1.5" />
-              </svg>
-            </div>
-            <div className="text-white">
-              <div className="text-xs font-light tracking-wider">
-                THE GLOBAL
-              </div>
-              <div className="text-sm font-semibold tracking-wide">
-                CHURCH SUPPORT
-              </div>
-              <div className="text-sm font-semibold tracking-wide">
-                ALLIANCE
-              </div>
+            <div className="relative w-24 h-24">
+              {" "}
+              {/* Adjusted for next/image */}
+              <Image
+                src={logo}
+                alt="Logo"
+                fill
+                priority
+                className="object-contain"
+              />
             </div>
           </div>
 
@@ -64,15 +54,15 @@ export const Navbar = () => {
             className="md:hidden text-white p-2"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-black/95 backdrop-blur-lg">
-          <div className="px-4 pt-2 pb-6 space-y-3">
+        <div className="md:hidden bg-black/95 backdrop-blur-lg border-t border-white/10">
+          <div className="px-6 pt-4 pb-6 space-y-3">
             {navLinks.map((link) => (
               <a
                 key={link.name}

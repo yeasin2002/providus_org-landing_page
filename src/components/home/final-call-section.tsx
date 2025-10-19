@@ -1,10 +1,9 @@
-import React from "react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { CTAButton, PrimaryButton } from "../reUsabale/buttons";
 import finalImgOne from "../../../public/assets/finalimgOnee.png";
-import finalImgTwo from "../../../public/assets/finalimgtwo.png";
 import finalImgThree from "../../../public/assets/finalimgThree.png";
+import finalImgTwo from "../../../public/assets/finalimgtwo.png";
+import { CTAButton, PrimaryButton } from "../reUsabale/buttons";
 
 export default function FinalCallSection() {
   const cards = [

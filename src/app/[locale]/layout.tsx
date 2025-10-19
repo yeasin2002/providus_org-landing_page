@@ -1,9 +1,15 @@
+import Footer from "@/components/footer/footer";
+import { Navbar } from "@/components/navbar/navbar";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./../globals.css";
-import { Navbar } from "@/components/navbar/navbar";
-import Footer from "@/components/footer/footer";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${montserrat.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider>
           <Navbar />

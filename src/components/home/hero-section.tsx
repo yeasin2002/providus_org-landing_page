@@ -1,9 +1,7 @@
 import Image from "next/image";
-import { ArrowRight, Star } from "lucide-react";
-import star from "../../../public/assets/star.png";
 import bgImg from "../../../public/assets/background.jpg";
+import star from "../../../public/assets/star.png";
 import { CTAButton } from "../reUsabale/buttons";
-
 
 export const HeroSection = () => {
   return (
@@ -44,7 +42,6 @@ export const HeroSection = () => {
         </div>
         <Image src={star} alt="star" className="ml-3" />
       </div>
-     
     </div>
   );
 };

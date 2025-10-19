@@ -1,9 +1,9 @@
-import { ArrowRight, Award, Globe, Heart } from "lucide-react";
+import { Award, Globe, Heart } from "lucide-react";
 import Image from "next/image";
-import felloshipMain from "../../../public/assets/fellowshipMain.png";
 import icon from "../../../public/assets/fellowship1.png";
 import icon2 from "../../../public/assets/fellowship2.png";
 import icon3 from "../../../public/assets/fellowship3.png";
+import felloshipMain from "../../../public/assets/fellowshipMain.png";
 import { CTAButton, PrimaryButton } from "../reUsabale/buttons";
 
 export default function FellowshipHonorsSection() {
