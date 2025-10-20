@@ -1,8 +1,9 @@
 import Footer from "@/components/footer/footer";
 import { Navbar } from "@/components/navbar/navbar";
+import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { Geist, Geist_Mono, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./../globals.css";
 
 const montserrat = Montserrat({
@@ -11,15 +12,6 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -34,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.variable} ${geistMono.variable} antialiased`}
+        className={`${montserrat.variable} antialiased`}
       >
         <NextIntlClientProvider>
           <Navbar />
@@ -44,4 +36,10 @@ export default function RootLayout({
       </body>
     </html>
   );
+}
+
+
+
+export async function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
 }
