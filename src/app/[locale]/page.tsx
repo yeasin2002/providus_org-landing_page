@@ -8,11 +8,8 @@ import { SpecialOpportunitySection } from "@/components/home/opputunity/oppurtun
 import { Stories } from "@/components/home/stories-pastors";
 import VisionHeroSection from "@/components/home/vision-hero-section";
 import PastorsJoiningSection from "@/components/home/why-pastors-section";
-import { useTranslations } from "next-intl";
 
 export default function Home() {
-  const t = useTranslations("about");
-
   return (
     <div>
       <HeroSection />
