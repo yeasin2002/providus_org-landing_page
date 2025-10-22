@@ -5,7 +5,7 @@ import Image from "next/image";
 import { CTAButton, PrimaryButton } from "../reUsabale/buttons";
 export default function VisionHeroSection() {
   return (
-    <div className="w-full bg-white py-16 md:py-24 px-4 sm:px-6 lg:px-8">
+    <div className="w-full bg-white py-16 md:py-24 px-4 sm:px-6 lg:px-8" id="vision">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content Section */}

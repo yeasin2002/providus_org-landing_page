@@ -29,7 +29,7 @@ export const Stories = () => {
   ];
 
   return (
-    <section className="bg-[#023C5E0A] py-20 px-4 sm:px-6 lg:px-8 font-sans">
+    <section className="bg-[#023C5E0A] py-20 px-4 sm:px-6 lg:px-8 font-sans" id="stories">
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
         {/* Section Header */}
         <PrimaryButton text="BENEFITS" />

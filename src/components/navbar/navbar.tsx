@@ -9,22 +9,20 @@ export const Navbar = () => {
 
   const navLinks = [
     { name: "Home", href: "#home" },
-    { name: "Why Join", href: "#why-join" },
-    { name: "How It Works", href: "#how-it-works" },
-    { name: "Stories", href: "#stories" },
-    { name: "FAQ", href: "#faq" },
-    { name: "Vision", href: "#vision" },
+    { name: "Why Join", href: "#why-join", id: "#why" },
+    { name: "How It Works", href: "#how-it-works", id: "#how-it-works" },
+    { name: "Stories", href: "#stories", id: "#stories" },
+    { name: "FAQ", href: "#faq", id: "faq" },
+    { name: "Vision", href: "#vision", id: "vision" },
   ];
 
   return (
-    <nav className="absolute top-4  w-full z-50 bg-transparent py-4">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="relative w-24 h-24">
-              {" "}
-              {/* Adjusted for next/image */}
+    <nav className="absolute top-4 w-full z-50 bg-transparent py-4">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 relative">
+          {/* Logo (Left) */}
+          <div className="flex items-center">
+            <div className="relative w-[111px] h-[111px]">
               <Image
                 src={logo}
                 alt="Logo"
@@ -35,23 +33,23 @@ export const Navbar = () => {
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Centered Navigation */}
+          <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8">
             {navLinks.map((link) => (
               <a
-                key={link.name}
+                key={link.id}
                 href={link.href}
-                className="text-white hover:text-yellow-400 transition-colors duration-200 text-sm font-medium"
+                className="text-white hover:text-yellow-400 transition-colors duration-200 text-[18px] font-medium"
               >
                 {link.name}
               </a>
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button (Right) */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden text-white p-2"
+            className="md:hidden text-white p-2 ml-auto"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}

@@ -17,12 +17,12 @@ interface Props extends React.ComponentProps<"footer"> {}
 
 export function Footer({ className }: Props) {
   const quickLinks = [
-    { label: "Home", href: "#" },
-    { label: "Why Join", href: "#" },
-    { label: "How it works", href: "#" },
-    { label: "Stories", href: "#" },
-    { label: "FAQ", href: "#" },
-    { label: "Vision", href: "#" },
+    { label: "Home", href: "#", id: "#home" },
+    { label: "Why Join", href: "#why-join", id: "#why-join" },
+    { label: "How it works", href: "#how-it-works", id: "#how-it-works" },
+    { label: "Stories", href: "#stories", id: "#stories" },
+    { label: "FAQ", href: "#faq", id: "#faq" },
+    { label: "Vision", href: "#vision", id: "#vision" },
   ];
 
   const recentPosts = [
@@ -55,15 +55,15 @@ export function Footer({ className }: Props) {
   return (
     <footer className={cn("w-full bg-black text-white", className)}>
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 font-montserrat">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {/* Brand Section */}
           <div className="space-y-6">
             {/* Logo */}
             <Image src={logoImage} alt="Logo" width={100} height={100} />
 
             {/* Description */}
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-[#FFFFFF] text-[18px] leading-relaxed font-montserrat">
               Join a worldwide fellowship of churches and open new doors of
               support for your ministry.
             </p>
@@ -106,14 +106,15 @@ export function Footer({ className }: Props) {
             <h3 className="text-white font-bold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
+                <li key={link.id}>
+                  <a
+                    id={link.id}
                     href={link.href}
                     className="text-gray-400 hover:text-gold transition-colors text-sm flex items-center gap-2 group"
                   >
-                    <span className="size-2 bg-gold rounded-full  transition-opacity"></span>
+                    <span className="w-2 h-2 bg-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -121,7 +122,7 @@ export function Footer({ className }: Props) {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-6">Contact</h3>
+            <h3 className="text-white font-bold text-lg mb-6 font-montserrat">Contact</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
@@ -133,17 +134,7 @@ export function Footer({ className }: Props) {
                   New York, USA
                 </p>
               </li>
-              <li className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <a
-                  href="tel:8509627192"
-                  className="text-gray-400 hover:text-gold text-sm transition-colors"
-                >
-                  (850) 562 7192
-                </a>
-              </li>
+
               <li className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
                   <Mail className="w-5 h-5" />
@@ -161,7 +152,7 @@ export function Footer({ className }: Props) {
           </div>
 
           {/* Recent Post */}
-          <div>
+          {/* <div>
             <h3 className="text-white font-bold text-lg mb-6">Recent Post</h3>
             <div className="grid grid-cols-3 gap-2">
               {recentPosts.map((post, index) => (
@@ -180,7 +171,7 @@ export function Footer({ className }: Props) {
                 </a>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
