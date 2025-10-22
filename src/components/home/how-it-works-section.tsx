@@ -57,7 +57,10 @@ const steps: Step[] = [
 
 const HowItWorksSection: React.FC = () => {
   return (
-    <section className="bg-[#023C5E0A] py-16 px-4 sm:px-6 lg:px-8 font-sans" id="how-it-works">
+    <section
+      className="bg-[#023C5E0A] py-16 px-4 sm:px-6 lg:px-8 font-sans"
+      id="how-it-works"
+    >
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         {/* Top Button */}
         <PrimaryButton text="PROCESS" />

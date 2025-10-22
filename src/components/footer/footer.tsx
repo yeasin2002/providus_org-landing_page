@@ -122,7 +122,9 @@ export function Footer({ className }: Props) {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-6 font-montserrat">Contact</h3>
+            <h3 className="text-white font-bold text-lg mb-6 font-montserrat">
+              Contact
+            </h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
