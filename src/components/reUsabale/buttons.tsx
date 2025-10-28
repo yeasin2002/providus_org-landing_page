@@ -14,7 +14,7 @@ export const CTAButton = ({ text }: { text: string }) => {
 export const PrimaryButton = ({ text }: { text: string }) => {
   return (
     <>
-      <button className="bg-[#C79C441F] text-[#023C5E] font-bold flex gap-3 px-4 py-3 rounded-full ">
+      <button className="bg-[#C79C441F] text-[#023C5E] font-bold flex gap-3 px-4 py-3 rounded-full uppercase">
         <svg
           width={"24"} // Default size 24 if not provided
           height={"24"} // Default size 24 if not provided

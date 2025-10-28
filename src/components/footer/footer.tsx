@@ -1,23 +1,28 @@
-import React from "react";
+import logoImage from "@/assets/logo.svg";
+
+import { cn } from "@/lib/utils";
 import {
-  Linkedin,
-  Twitter,
   Facebook,
   Instagram,
+  Linkedin,
+  Mail,
   MapPin,
   Phone,
-  Mail,
+  Twitter,
 } from "lucide-react";
-import logo from "../../../public/assets/logo.png";
+import Image from "next/image";
 import Link from "next/link";
-export default function Footer() {
+
+interface Props extends React.ComponentProps<"footer"> {}
+
+export function Footer({ className }: Props) {
   const quickLinks = [
-    { label: "Home", href: "#" },
-    { label: "Why Join", href: "#" },
-    { label: "How it works", href: "#" },
-    { label: "Stories", href: "#" },
-    { label: "FAQ", href: "#" },
-    { label: "Vision", href: "#" },
+    { label: "Home", href: "#", id: "#home" },
+    { label: "Why Join", href: "#why-join", id: "#why-join" },
+    { label: "How it works", href: "#how-it-works", id: "#how-it-works" },
+    { label: "Stories", href: "#stories", id: "#stories" },
+    { label: "FAQ", href: "#faq", id: "#faq" },
+    { label: "Vision", href: "#vision", id: "#vision" },
   ];
 
   const recentPosts = [
@@ -39,7 +44,7 @@ export default function Footer() {
     },
     {
       image:
-        "https://images.unsplash.com/photo-1460537146350-b2583feaa6b5?w=200&h=200&fit=crop",
+        "https://images.unsplash.com/photo-1757609211191-f0a93f7c270b?w=200&h=200&fit=crop",
     },
     {
       image:
@@ -48,34 +53,17 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full bg-black text-white">
+    <footer className={cn("w-full bg-black text-white", className)}>
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 font-montserrat">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           {/* Brand Section */}
           <div className="space-y-6">
             {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <div className="w-8 h-8 border-4 border-yellow-600 rounded-full flex items-center justify-center">
-                  <div className="w-3 h-3 bg-[#C79C44] rounded-full"></div>
-                </div>
-              </div>
-              <div className="text-white">
-                <div className="text-xs font-bold uppercase tracking-wider leading-tight">
-                  International
-                </div>
-                <div className="text-xs font-bold uppercase tracking-wider leading-tight">
-                  Churches And
-                </div>
-                <div className="text-xs font-bold uppercase tracking-wider leading-tight">
-                  Alliance
-                </div>
-              </div>
-            </div>
+            <Image src={logoImage} alt="Logo" width={100} height={100} />
 
             {/* Description */}
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-[#FFFFFF] text-[18px] leading-relaxed font-montserrat">
               Join a worldwide fellowship of churches and open new doors of
               support for your ministry.
             </p>
@@ -83,28 +71,28 @@ export default function Footer() {
             {/* Social Icons */}
             <div className="flex items-center gap-3">
               <Link
-                href="#"
+                href="/"
                 className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </Link>
               <Link
-                href="#"
+                href="/"
                 className="w-10 h-10 bg-yellow-600 hover:bg-yellow-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
               </Link>
               <Link
-                href="#"
+                href="/"
                 className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </Link>
               <Link
-                href="#"
+                href="/"
                 className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
@@ -117,13 +105,14 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-bold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
+              {quickLinks.map((link) => (
+                <li key={link.id}>
                   <a
+                    id={link.id}
                     href={link.href}
-                    className="text-gray-400 hover:text-yellow-600 transition-colors text-sm flex items-center gap-2 group"
+                    className="text-gray-400 hover:text-gold transition-colors text-sm flex items-center gap-2 group"
                   >
-                    <span className="w-1.5 h-1.5 bg-yellow-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                    <span className="w-2 h-2 bg-gold rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                     {link.label}
                   </a>
                 </li>
@@ -133,10 +122,12 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-6">Contact</h3>
+            <h3 className="text-white font-bold text-lg mb-6 font-montserrat">
+              Contact
+            </h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[#C79C44] rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <p className="text-gray-400 text-sm leading-relaxed pt-2">
@@ -145,24 +136,14 @@ export default function Footer() {
                   New York, USA
                 </p>
               </li>
-              <li className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-[#C79C44] rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <a
-                  href="tel:8509627192"
-                  className="text-gray-400 hover:text-[#C79C44] text-sm transition-colors"
-                >
-                  (850) 562 7192
-                </a>
-              </li>
+
               <li className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-[#C79C44] rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center flex-shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
                 <a
                   href="mailto:hello@internationalchurchesalliance.com"
-                  className="text-gray-400 hover:text-[#C79C44] text-sm transition-colors break-all"
+                  className="text-gray-400 hover:text-gold text-sm transition-colors break-all"
                 >
                   hello@internationalchurches
                   <br />
@@ -173,24 +154,26 @@ export default function Footer() {
           </div>
 
           {/* Recent Post */}
-          <div>
+          {/* <div>
             <h3 className="text-white font-bold text-lg mb-6">Recent Post</h3>
             <div className="grid grid-cols-3 gap-2">
               {recentPosts.map((post, index) => (
                 <a
-                  key={index}
-                  href="#"
+                  key={crypto.randomUUID()}
+                  href="/"
                   className="aspect-square rounded-lg overflow-hidden hover:opacity-75 transition-opacity"
                 >
-                  <img
+                  <Image
                     src={post.image}
                     alt={`Recent post ${index + 1}`}
                     className="w-full h-full object-cover"
+                    width={500}
+                    height={500}
                   />
                 </a>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -200,11 +183,11 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[#FFFFFF]">
             <p>Copyright© 2024. All Rights Reserved.</p>
             <div className="flex items-center gap-4">
-              <a href="#" className="hover:text-yellow-600 transition-colors">
+              <a href="/" className="hover:text-yellow-600 transition-colors">
                 Terms & Conditions
               </a>
               <span>|</span>
-              <a href="#" className="hover:text-yellow-600 transition-colors">
+              <a href="/" className="hover:text-yellow-600 transition-colors">
                 Privacy Policy
               </a>
             </div>

@@ -41,6 +41,10 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --font-montserrat: var(--font-montserrat);
+  --font-rubik: var(--font-rubik);
+  --font-work-sans: var(--font-work-sans);
 }
 
 :root {
@@ -119,4 +123,7 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+html {
+  scroll-behavior: smooth;
 }

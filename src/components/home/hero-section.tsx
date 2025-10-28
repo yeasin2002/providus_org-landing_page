@@ -10,7 +10,7 @@ export const HeroSection = () => {
         <Image src={bgImg} alt="Background" fill className="object-cover" />
 
         {/* Black linear gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/50" />
 
         <div className="absolute inset-0">
           <div className="absolute top-20 left-1/4 w-32 h-48 bg-blue-900/20 rounded-t-full backdrop-blur-sm"></div>
@@ -36,8 +36,8 @@ export const HeroSection = () => {
       <div className="h-[80px] bg-[#C79C44] flex justify-center items-center">
         <Image src={star} alt="star" className="mr-3" />
         <div className="text-center ">
-          <h3 className="md:text-[24px] text-[16px] font-semibold text-[#FFFFFF] leading-3">
-            INTERNATIONAL CHURCH SUPPORT ALL
+          <h3 className="md:text-[24px] text-[16px] font-semibold text-[#FFFFFF] leading-3 uppercase">
+            INTERNATIONAL CHURCH SUPPORT Alliance
           </h3>
         </div>
         <Image src={star} alt="star" className="ml-3" />

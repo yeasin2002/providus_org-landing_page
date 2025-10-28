@@ -1,25 +1,11 @@
-import Footer from "@/components/footer/footer";
+import { Footer } from "@/components/footer/footer";
 import { Navbar } from "@/components/navbar/navbar";
+import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { Geist, Geist_Mono, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./../globals.css";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-montserrat",
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { fontVariables } from "@/lib/font";
 
 export const metadata: Metadata = {
   title: "ICSA",
@@ -33,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${montserrat.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${fontVariables} antialiased`}>
         <NextIntlClientProvider>
           <Navbar />
           {children}
@@ -44,4 +28,8 @@ export default function RootLayout({
       </body>
     </html>
   );
+}
+
+export async function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
 }
