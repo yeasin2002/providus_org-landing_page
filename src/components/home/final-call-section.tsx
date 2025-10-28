@@ -29,7 +29,7 @@ export default function FinalCallSection() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-12 md:mb-16">
-          <PrimaryButton text="OPPORTUNITIES" />Opportunities
+          <PrimaryButton text="OPPORTUNITIES" />
           <h2 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 leading-snug">
             ICSA makes it simple, free,
             <br className="hidden sm:block" />
