@@ -1,11 +1,10 @@
 import { Footer } from "@/components/footer/footer";
 import { Navbar } from "@/components/navbar/navbar";
 import { routing } from "@/i18n/routing";
+import { fontVariables } from "@/lib/font";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { Montserrat } from "next/font/google";
 import "./../globals.css";
-import { fontVariables } from "@/lib/font";
 
 export const metadata: Metadata = {
   title: "ICSA",

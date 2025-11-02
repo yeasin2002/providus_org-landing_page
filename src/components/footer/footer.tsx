@@ -7,7 +7,6 @@ import {
   Linkedin,
   Mail,
   MapPin,
-  Phone,
   Twitter,
 } from "lucide-react";
 import Image from "next/image";
