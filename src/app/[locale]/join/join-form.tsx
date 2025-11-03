@@ -12,11 +12,9 @@ import { useForm } from "react-hook-form";
 import { submitChurchRegistration } from "./actions";
 import {
   checkHoneypot,
-  checkInteractionCount,
   checkMathAnswer,
   checkSubmitTime,
 } from "./spam-protection";
-import { useInteractionTracker } from "./use-interaction-tracker";
 import {
   generateMathQuestion,
   joinSchema,
@@ -42,8 +40,6 @@ export const JoinFormSection = () => {
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [mathQuestion] = useState(generateMathQuestion());
-
-  const interactionCount = useInteractionTracker();
 
   const onSubmit = async (data: JoinFormData) => {
     setSubmitAttempted(true);
@@ -73,18 +69,12 @@ export const JoinFormSection = () => {
       return;
     }
 
-    const interactionCheck = checkInteractionCount(interactionCount);
-    if (!interactionCheck.isValid) {
-      setErrorMessage(
-        interactionCheck.errorMessage || "Please review the form"
-      );
-      setSubmitAttempted(false);
-      return;
-    }
+    console.log(data);
+
+    const result = await submitChurchRegistration(data);
+    console.log("🚀 ~ onSubmit ~ result:", result);
 
     // Submit the form
-    const result = await submitChurchRegistration(data);
-
     if (!result.success) {
       setErrorMessage(result.error || "Submission failed");
       setSubmitAttempted(false);
@@ -92,7 +82,6 @@ export const JoinFormSection = () => {
     }
 
     // Handle success - redirect or show success message
-    // TODO: Redirect to thank you page
     console.log("Registration successful:", result.data);
   };
 

@@ -17,14 +17,15 @@ export const submitChurchRegistration = async (
   try {
     // Remove honeypot and math answer fields before submission
     // biome-ignore lint/correctness/noUnusedVariables: Fields intentionally destructured to exclude from submission
-    const { website, mathAnswer, ...submitData } = formData;
+    
 
     const newChurch = {
-      name: submitData.churchName.trim(),
-      contact_person: submitData.primaryContact.trim(),
-      contact_email: submitData.email.trim(),
-      country: submitData.country,
-      language: "en", // Default language, can be extended
+      name: formData.churchName.trim(),
+      contact_person: formData.primaryContact.trim(),
+      contact_email: formData.email.trim(),
+      country: formData.country,
+      language: "en",
+      website: "",
     };
 
     const supabase = createClient();
