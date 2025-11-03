@@ -10,7 +10,8 @@ import VisionHeroSection from "@/components/home/vision-hero-section";
 import PastorsJoiningSection from "@/components/home/why-pastors-section";
 import { Navbar } from "@/components/navbar/navbar";
 
-export default function Home() {
+
+export default async function Home() {
   return (
     <>
       <Navbar />
