@@ -1,5 +1,5 @@
 import { Footer } from "@/components/footer/footer";
-import { Navbar } from "@/components/navbar/navbar";
+
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/font";
 import type { Metadata } from "next";
@@ -20,7 +20,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${fontVariables} antialiased`}>
         <NextIntlClientProvider>
-          <Navbar />
           {children}
           <Footer />
         </NextIntlClientProvider>

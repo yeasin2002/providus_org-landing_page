@@ -8,20 +8,24 @@ import { SpecialOpportunitySection } from "@/components/home/opputunity/oppurtun
 import { Stories } from "@/components/home/stories-pastors";
 import VisionHeroSection from "@/components/home/vision-hero-section";
 import PastorsJoiningSection from "@/components/home/why-pastors-section";
+import { Navbar } from "@/components/navbar/navbar";
 
 export default function Home() {
   return (
-    <div>
-      <HeroSection />
-      <PastorsJoiningSection />
-      <HowItWorksSection />
-      <Benefits />
-      <Stories />
-      <FellowshipHonorsSection />
-      <FAQSection />
-      <VisionHeroSection />
-      <SpecialOpportunitySection />
-      <FinalCallSection />
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <HeroSection />
+        <PastorsJoiningSection />
+        <HowItWorksSection />
+        <Benefits />
+        <Stories />
+        <FellowshipHonorsSection />
+        <FAQSection />
+        <VisionHeroSection />
+        <SpecialOpportunitySection />
+        <FinalCallSection />
+      </div>
+    </>
   );
 }

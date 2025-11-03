@@ -30,7 +30,7 @@ export const HeroSection = () => {
             introduced to new supporters, your projects are displayed, and
             donors can give directly.
           </p>
-          <CTAButton text="Join For Free" />
+          <CTAButton text="Join For Free" href="/join" />
         </div>
       </div>
       <div className="h-[80px] bg-[#C79C44] flex justify-center items-center">
