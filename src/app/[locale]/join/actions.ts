@@ -1,31 +1,33 @@
 import { createClient } from "@/utils/supabase/client";
+
 import type { JoinFormData } from "./validation";
+
+export interface ChurchData {
+  id: string;
+  name: string;
+  contact_person: string;
+  contact_email: string;
+  country: string;
+  language: string;
+  website: null;
+}
 
 export interface SubmitResult {
   success: boolean;
   error?: string;
-  data?: {
-    id: string;
-    name: string;
-    contact_email: string;
-  };
+  data?: ChurchData;
 }
 
 export const submitChurchRegistration = async (
   formData: JoinFormData
 ): Promise<SubmitResult> => {
   try {
-    // Remove honeypot and math answer fields before submission
-    // biome-ignore lint/correctness/noUnusedVariables: Fields intentionally destructured to exclude from submission
-    
-
     const newChurch = {
       name: formData.churchName.trim(),
       contact_person: formData.primaryContact.trim(),
       contact_email: formData.email.trim(),
       country: formData.country,
       language: "en",
-      website: "",
     };
 
     const supabase = createClient();
@@ -46,10 +48,7 @@ export const submitChurchRegistration = async (
 
     console.log("Form submitted successfully:", data);
 
-    return {
-      success: true,
-      data,
-    };
+    return { success: true, data };
   } catch (error) {
     console.error("Submission error:", error);
     return {

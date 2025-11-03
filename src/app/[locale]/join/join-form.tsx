@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { submitChurchRegistration } from "./actions";
+import { sendWelcomeEmail } from "./email-service";
 import {
   checkHoneypot,
   checkMathAnswer,
@@ -39,50 +40,73 @@ export const JoinFormSection = () => {
   const [formLoadTime] = useState<number>(Date.now());
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [mathQuestion] = useState(generateMathQuestion());
 
   const onSubmit = async (data: JoinFormData) => {
-    setSubmitAttempted(true);
-    setErrorMessage("");
+    try {
+      setSubmitAttempted(true);
+      setErrorMessage("");
+      setSuccessMessage("");
 
-    // Run spam protection checks
-    const honeypotCheck = checkHoneypot(data);
-    if (!honeypotCheck.isValid) {
-      setErrorMessage(honeypotCheck.errorMessage || "Invalid submission");
-      setSubmitAttempted(false);
-      return;
-    }
+      // Run spam protection checks
+      const honeypotCheck = checkHoneypot(data);
+      if (!honeypotCheck.isValid) {
+        setErrorMessage(honeypotCheck.errorMessage || "Invalid submission");
+        setSubmitAttempted(false);
+        return;
+      }
 
-    const timeCheck = checkSubmitTime(formLoadTime);
-    if (!timeCheck.isValid) {
-      setErrorMessage(
-        timeCheck.errorMessage || "Please wait before submitting"
+      const timeCheck = checkSubmitTime(formLoadTime);
+      if (!timeCheck.isValid) {
+        setErrorMessage(
+          timeCheck.errorMessage || "Please wait before submitting"
+        );
+        setSubmitAttempted(false);
+        return;
+      }
+
+      const mathCheck = checkMathAnswer(data.mathAnswer, mathQuestion.answer);
+      if (!mathCheck.isValid) {
+        setErrorMessage(mathCheck.errorMessage || "Incorrect answer");
+        setSubmitAttempted(false);
+        return;
+      }
+
+      // Submit the form to database
+      const result = await submitChurchRegistration(data);
+
+      if (!result.success || !result.data) {
+        setErrorMessage(result.error || "Submission failed");
+        setSubmitAttempted(false);
+        return;
+      }
+
+      // Send welcome email with program submission link
+      const emailResult = await sendWelcomeEmail({
+        churchName: data.churchName,
+        contactName: data.primaryContact,
+        email: data.email,
+        token: result.data.id,
+      });
+
+      if (!emailResult.success) {
+        console.error("Email sending failed:", emailResult.error);
+        // Don't fail the whole process if email fails
+        setSuccessMessage(
+          "Registration successful! However, there was an issue sending the email. Please contact support."
+        );
+        return;
+      }
+
+      setSuccessMessage(
+        "Registration successful! Check your email for next steps."
       );
+    } catch (error) {
+      console.error("Submission error:", error);
+      setErrorMessage("An unexpected error occurred. Please try again.");
       setSubmitAttempted(false);
-      return;
     }
-
-    const mathCheck = checkMathAnswer(data.mathAnswer, mathQuestion.answer);
-    if (!mathCheck.isValid) {
-      setErrorMessage(mathCheck.errorMessage || "Incorrect answer");
-      setSubmitAttempted(false);
-      return;
-    }
-
-    console.log(data);
-
-    const result = await submitChurchRegistration(data);
-    console.log("🚀 ~ onSubmit ~ result:", result);
-
-    // Submit the form
-    if (!result.success) {
-      setErrorMessage(result.error || "Submission failed");
-      setSubmitAttempted(false);
-      return;
-    }
-
-    // Handle success - redirect or show success message
-    console.log("Registration successful:", result.data);
   };
 
   return (
@@ -218,6 +242,15 @@ export const JoinFormSection = () => {
         {errorMessage && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
             <p className="text-red-600 text-sm">{errorMessage}</p>
+          </div>
+        )}
+
+        {/* Success message */}
+        {successMessage && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+            <p className="text-green-600 text-sm font-medium">
+              {successMessage}
+            </p>
           </div>
         )}
 
