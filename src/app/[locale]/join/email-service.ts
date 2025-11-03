@@ -26,47 +26,11 @@ export const sendWelcomeEmail = async ({
       programSubmissionLink,
     });
 
-    // Plain text fallback
-    const textContent = `
-Dear ${contactName},
-
-Thank you for registering ${churchName} with the International Church Support Alliance!
-
-Your registration is complete, and you're now ready to share your church's story with supporters worldwide.
-
-Next Step: Submit Your Program
-To get your church featured on our showcase platform, please submit your program details by visiting:
-${programSubmissionLink}
-
-This takes just 5-10 minutes and includes:
-- Your church's story and mission
-- One photo (required)
-- A video link (optional)
-
-What Happens After You Submit:
-✓ Our team reviews your submission
-✓ Your church gets featured on voices.icsa.church
-✓ Supporters worldwide can discover and contact you
-✓ You receive a verification certificate
-
-Need help? Contact us at support@icsa.church
-
-© ${new Date().getFullYear()} International Church Support Alliance
-Building bridges between churches and supporters worldwide
-    `.trim();
-
     // Send email via API route
     const response = await fetch("/api/email", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        to: email,
-        subject: `Welcome to ICSA, ${churchName}! 🎉`,
-        text: textContent,
-        html: htmlContent,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({to: email,subject: `Welcome to ICSA, ${churchName}! 🎉`,html: htmlContent,}),
     });
 
     if (!response.ok) {
@@ -83,3 +47,33 @@ Building bridges between churches and supporters worldwide
     };
   }
 };
+
+
+
+//     const textContent = `
+// Dear ${contactName},
+
+// Thank you for registering ${churchName} with the International Church Support Alliance!
+
+// Your registration is complete, and you're now ready to share your church's story with supporters worldwide.
+
+// Next Step: Submit Your Program
+// To get your church featured on our showcase platform, please submit your program details by visiting:
+// ${programSubmissionLink}
+
+// This takes just 5-10 minutes and includes:
+// - Your church's story and mission
+// - One photo (required)
+// - A video link (optional)
+
+// What Happens After You Submit:
+// ✓ Our team reviews your submission
+// ✓ Your church gets featured on voices.icsa.church
+// ✓ Supporters worldwide can discover and contact you
+// ✓ You receive a verification certificate
+
+// Need help? Contact us at support@icsa.church
+
+// © ${new Date().getFullYear()} International Church Support Alliance
+// Building bridges between churches and supporters worldwide
+//     `.trim();
