@@ -1,5 +1,3 @@
-// oxlint-disable no-unused-vars
-/** biome-ignore-all lint/correctness/noUnusedVariables: <> */
 "use client";
 
 import startSharpIcon from "@/assets/star-sharp.svg";
@@ -7,12 +5,23 @@ import { Badge } from "@/components/ui/badge";
 import { countries } from "@/data/countries-list";
 import { CTAButton } from "@/shared/buttons";
 import { FormInput } from "@/shared/form-input";
-import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { submitChurchRegistration } from "./actions";
+import {
+  checkHoneypot,
+  checkInteractionCount,
+  checkMathAnswer,
+  checkSubmitTime,
+} from "./spam-protection";
+import { useInteractionTracker } from "./use-interaction-tracker";
+import {
+  generateMathQuestion,
+  joinSchema,
+  type JoinFormData,
+} from "./validation";
 
 const workSteps = [
   "It doesn't take much to open new doors for your church. By joining the Alliance, your ministry becomes visible to people worldwide who are ready to support. ",
@@ -20,132 +29,71 @@ const workSteps = [
   "A few minutes here can mean lasting recognition for your church and real opportunities for your mission. Do it for your cause. Do it for your church.",
 ];
 
-const joinSchema = z.object({
-  churchName: z.string().min(2, "Church name must be at least 2 characters"),
-  primaryContact: z
-    .string()
-    .min(2, "Contact name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  country: z.string().min(2, "Please enter your country"),
-  website: z.string().optional(), // Honeypot field
-  mathAnswer: z.string().min(1, "Please answer the security question"),
-});
-
-type JoinFormData = z.infer<typeof joinSchema>;
-
-const MIN_SUBMIT_TIME = 3000; // 5 seconds minimum
-
-// Generate simple math question
-const generateMathQuestion = () => {
-  const num1 = Math.floor(Math.random() * 10) + 1;
-  const num2 = Math.floor(Math.random() * 10) + 1;
-  return { question: `${num1} + ${num2}`, answer: num1 + num2 };
-};
-
 export const JoinFormSection = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    watch,
   } = useForm<JoinFormData>({
     resolver: zodResolver(joinSchema),
   });
 
   const [formLoadTime] = useState<number>(Date.now());
   const [submitAttempted, setSubmitAttempted] = useState(false);
-  const [timeWarning, setTimeWarning] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [mathQuestion] = useState(generateMathQuestion());
-  const [interactionCount, setInteractionCount] = useState(0);
 
-  // Watch honeypot field
-  const websiteValue = watch("website");
-  const mathAnswer = watch("mathAnswer");
-
-  // Track user interactions (real users interact with form)
-  useEffect(() => {
-    const handleInteraction = () => {
-      setInteractionCount((prev) => prev + 1);
-    };
-
-    // Track clicks, typing, mouse movement
-    document.addEventListener("click", handleInteraction);
-    document.addEventListener("keydown", handleInteraction);
-    document.addEventListener("mousemove", handleInteraction);
-
-    return () => {
-      document.removeEventListener("click", handleInteraction);
-      document.removeEventListener("keydown", handleInteraction);
-      document.removeEventListener("mousemove", handleInteraction);
-    };
-  }, []);
+  const interactionCount = useInteractionTracker();
 
   const onSubmit = async (data: JoinFormData) => {
     setSubmitAttempted(true);
-    setTimeWarning("");
+    setErrorMessage("");
 
-    if (data.website) {
-      console.warn("Spam detected: honeypot field filled");
-      return;
-    }
-
-    const timeElapsed = Date.now() - formLoadTime;
-    if (timeElapsed < MIN_SUBMIT_TIME) {
-      setTimeWarning(
-        "Please take a moment to review your information before submitting."
-      );
+    // Run spam protection checks
+    const honeypotCheck = checkHoneypot(data);
+    if (!honeypotCheck.isValid) {
+      setErrorMessage(honeypotCheck.errorMessage || "Invalid submission");
       setSubmitAttempted(false);
       return;
     }
-    const userAnswer = parseInt(data.mathAnswer || "0", 10);
-    if (userAnswer !== mathQuestion.answer) {
-      setTimeWarning(
-        "Incorrect answer to the security question. Please try again."
+
+    const timeCheck = checkSubmitTime(formLoadTime);
+    if (!timeCheck.isValid) {
+      setErrorMessage(
+        timeCheck.errorMessage || "Please wait before submitting"
       );
       setSubmitAttempted(false);
       return;
     }
 
-    // 4. Interaction check (bots don't interact naturally)
-    if (interactionCount < 5) {
-      console.warn("Insufficient interaction detected");
-      setTimeWarning("Please review the form before submitting.");
+    const mathCheck = checkMathAnswer(data.mathAnswer, mathQuestion.answer);
+    if (!mathCheck.isValid) {
+      setErrorMessage(mathCheck.errorMessage || "Incorrect answer");
       setSubmitAttempted(false);
       return;
     }
 
-    // 5. Remove honeypot field before sending
-    const { website, mathAnswer: _, ...submitData } = data;
-
-    try {
-      const newChurch = {
-        // name: name.trim(),
-        // contact_person: contactPerson.trim() || null,
-        // contact_email: contactEmail.trim() || null,
-        // country: country || null,
-        // language: language || null,
-        // website: website?.trim() || null
-      };
-      const supabase = createClient();
-      // Insert using Supabase client
-      const { data, error: insertError } = await supabase
-        .from("churches")
-        .insert([newChurch])
-        .select() // return the inserted row(s)
-        .single();
-
-      if (insertError) {
-        throw new Error("Submission failed");
-      }
-
-      console.log("Form submitted successfully:", data);
-
-      // Handle success (e.g., show success message, redirect, etc.)
-    } catch (error) {
-      console.error("Submission error:", error);
-      setTimeWarning("An error occurred. Please try again.");
+    const interactionCheck = checkInteractionCount(interactionCount);
+    if (!interactionCheck.isValid) {
+      setErrorMessage(
+        interactionCheck.errorMessage || "Please review the form"
+      );
       setSubmitAttempted(false);
+      return;
     }
+
+    // Submit the form
+    const result = await submitChurchRegistration(data);
+
+    if (!result.success) {
+      setErrorMessage(result.error || "Submission failed");
+      setSubmitAttempted(false);
+      return;
+    }
+
+    // Handle success - redirect or show success message
+    // TODO: Redirect to thank you page
+    console.log("Registration successful:", result.data);
   };
 
   return (
@@ -277,7 +225,12 @@ export const JoinFormSection = () => {
           </p>
         </div>
 
-        {/* Time warning message */}
+        {/* Error message */}
+        {errorMessage && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+            <p className="text-red-600 text-sm">{errorMessage}</p>
+          </div>
+        )}
 
         <div className="flex justify-center">
           <CTAButton type="submit" disabled={isSubmitting || submitAttempted}>
