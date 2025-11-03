@@ -4,6 +4,7 @@ import bgImg from "@/assets/background.jpg";
 import logoImg from "@/assets/logo.svg";
 import star from "@/assets/star.png";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   title: string;
@@ -25,11 +26,13 @@ export const HeroTopArea = ({ title, description }: Props) => {
 
         <div className="relative font-montserrat">
           <div className="max-w-7xl mx-auto">
-            <Image
-              src={logoImg}
-              alt="Logo"
-              className="md:w-28 md:h-28 w-16 h-16 mx-auto absolute top-5 z-50"
-            />
+            <Link href="/">
+              <Image
+                src={logoImg}
+                alt="Logo"
+                className="md:w-28 md:h-28 w-16 h-16 mx-auto absolute top-5 z-50"
+              />
+            </Link>
             <div className="absolute top-14 left-1/2 transform -translate-x-1/2 z-50 ">
               <button
                 type="button"

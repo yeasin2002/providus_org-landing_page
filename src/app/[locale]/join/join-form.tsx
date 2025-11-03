@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { countries } from "@/data/countries-list";
 import { CTAButton } from "@/shared/buttons";
 import { FormInput } from "@/shared/form-input";
+import { createClient } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -117,26 +118,27 @@ export const JoinFormSection = () => {
     const { website, mathAnswer: _, ...submitData } = data;
 
     try {
-      // Your API submission logic here
-      const response = await fetch("/api/join", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...submitData,
-          formLoadTime,
-          submitTime: Date.now(),
-          interactionCount,
-        }),
-      });
+      const newChurch = {
+        // name: name.trim(),
+        // contact_person: contactPerson.trim() || null,
+        // contact_email: contactEmail.trim() || null,
+        // country: country || null,
+        // language: language || null,
+        // website: website?.trim() || null
+      };
+      const supabase = createClient();
+      // Insert using Supabase client
+      const { data, error: insertError } = await supabase
+        .from("churches")
+        .insert([newChurch])
+        .select() // return the inserted row(s)
+        .single();
 
-      if (!response.ok) {
+      if (insertError) {
         throw new Error("Submission failed");
       }
 
-      const result = await response.json();
-      console.log("Form submitted successfully:", result);
+      console.log("Form submitted successfully:", data);
 
       // Handle success (e.g., show success message, redirect, etc.)
     } catch (error) {
