@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
-import { ArrowRight, ChevronDown } from "lucide-react";
-import whyImg from "../../../public/assets/whyImage.png";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
+import whyImg from "../../../public/assets/whyImage.png";
 import { CTAButton, PrimaryButton } from "../reUsabale/buttons";
 export default function FAQSection() {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
     {
@@ -30,7 +30,7 @@ export default function FAQSection() {
     },
   ];
 
-  const toggleAccordion = (index: any) => {
+  const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
@@ -61,13 +61,14 @@ export default function FAQSection() {
             <div className="space-y-4">
               {faqs.map((faq, index) => (
                 <div
-                  key={index}
+                  key={faq.question}
                   className="bg-white rounded-xl shadow-sm overflow-hidden"
                 >
                   {/* Question Button */}
                   <button
                     onClick={() => toggleAccordion(index)}
                     className="w-full px-6 py-5 flex items-center justify-between text-left bg-[#F5F5F5] hover:bg-gray-50 transition-colors"
+                    type="button"
                   >
                     <span className="font-semibold text-gray-900 text-lg pr-4">
                       {faq.question}
@@ -96,7 +97,7 @@ export default function FAQSection() {
             </div>
 
             {/* CTA Button */}
-            <CTAButton text="See How Simple It Is to Join" />
+            <CTAButton text="See How Simple It Is to Join" href="/join" />
           </div>
         </div>
       </div>

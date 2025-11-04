@@ -1,6 +1,5 @@
 // src/components/HowItWorksSection.tsx
-import React from "react";
-import Image, { StaticImageData } from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { CTAButton, PrimaryButton } from "../reUsabale/buttons";
 import { Heading } from "../reUsabale/heading-title";
 
@@ -55,7 +54,7 @@ const steps: Step[] = [
   },
 ];
 
-const HowItWorksSection: React.FC = () => {
+const HowItWorksSection = () => {
   return (
     <section
       className="bg-[#023C5E0A] py-16 px-4 sm:px-6 lg:px-8 font-sans"
@@ -75,7 +74,7 @@ const HowItWorksSection: React.FC = () => {
 
         {/* Steps Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-16 relative justify-items-center w-full">
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <div
               key={step.id}
               className="relative flex flex-col items-start bg-white p-8 rounded-2xl shadow-lg max-w-sm w-full transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
@@ -122,7 +121,7 @@ const HowItWorksSection: React.FC = () => {
 
         {/* CTA Button */}
         <div className="mt-16 text-center">
-          <CTAButton text="Start My Church's Journey" />
+          <CTAButton text="Start My Church's Journey" href="/join" />
         </div>
       </div>
     </section>

@@ -44,8 +44,8 @@ export default function FellowshipHonorsSection() {
 
             {/* Features List */}
             <div className="space-y-6">
-              {features.map((feature, index) => (
-                <div key={index} className="flex gap-4">
+              {features.map((feature) => (
+                <div key={feature.text} className="flex gap-4">
                   {/* Icon */}
                   <div className="flex-shrink-0 w-16 h-16 rounded-full flex items-center justify-center bg-[#C79C441F]">
                     <Image
@@ -65,7 +65,7 @@ export default function FellowshipHonorsSection() {
               ))}
             </div>
 
-            <CTAButton text="Be Recognized as a Founding Member" />
+            <CTAButton text="Be Recognized as a Founding Member" href="/join" />
           </div>
 
           {/* Image Section */}

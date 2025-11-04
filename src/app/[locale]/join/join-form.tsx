@@ -7,6 +7,7 @@ import { CTAButton } from "@/shared/buttons";
 import { FormInput } from "@/shared/form-input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { submitChurchRegistration } from "./actions";
@@ -29,6 +30,7 @@ const workSteps = [
 ];
 
 export const JoinFormSection = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -102,6 +104,7 @@ export const JoinFormSection = () => {
       setSuccessMessage(
         "Registration successful! Check your email for next steps."
       );
+      router.push("/thanks");
     } catch (error) {
       console.error("Submission error:", error);
       setErrorMessage("An unexpected error occurred. Please try again.");

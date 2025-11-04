@@ -11,7 +11,7 @@ export const CTAButton = ({ text, href }: Props) => {
   const Component: any = href ? Link : "button";
   return (
     <Component
-      className="bg-[#C79C44] hover:bg-yellow-500 text-white font-semibold px-6 py-2 rounded-full inline-flex items-center gap-4 transition-all hover:scale-90"
+      className="bg-gold hover:bg-gold/90 text-white font-semibold px-6 py-2 rounded-full inline-flex items-center gap-4 transition-all hover:scale-95"
       href={href}
       type={!href ? "button" : undefined}
     >

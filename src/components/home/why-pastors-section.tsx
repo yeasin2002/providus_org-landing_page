@@ -33,7 +33,7 @@ export default function PastorsJoiningSection() {
                   Members contribute for a short grant, tailored to your
                   church's needs.
                 </p>
-                <h1 className="border border-b border-[#C1C1C1] my-4"></h1>
+                <div className="border border-b border-[#C1C1C1] my-4"></div>
               </div>
 
               {/* Visibility Without Tech Skills */}
@@ -45,7 +45,7 @@ export default function PastorsJoiningSection() {
                   Simply reply to emails and receive a global or short story —
                   no guide you need by hand.
                 </p>
-                <h1 className="border border-b border-[#C1C1C1] my-4"></h1>
+                <div className="border border-b border-[#C1C1C1] my-4"></div>
               </div>
 
               {/* Credibility */}
@@ -57,7 +57,7 @@ export default function PastorsJoiningSection() {
                   Receive your official membership certificate once your church
                   has completed the journey.
                 </p>
-                <h1 className="border border-b border-[#C1C1C1] my-4"></h1>
+                <div className="border border-b border-[#C1C1C1] my-4"></div>
               </div>
 
               {/* European Connections */}
@@ -69,7 +69,7 @@ export default function PastorsJoiningSection() {
                   We introduce your church to established European ministries
                   and networks.
                 </p>
-                <h1 className="border border-b border-[#C1C1C1] my-4"></h1>
+                <div className="border border-b border-[#C1C1C1] my-4"></div>
               </div>
 
               {/* Fellowship */}
@@ -84,7 +84,7 @@ export default function PastorsJoiningSection() {
             </div>
 
             {/* CTA Button */}
-            <CTAButton text="Claim My Free Membership Journey" />
+            <CTAButton text="Claim My Free Membership Journey" href="/join" />
           </div>
         </div>
       </div>

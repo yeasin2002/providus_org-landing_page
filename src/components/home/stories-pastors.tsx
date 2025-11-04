@@ -1,8 +1,8 @@
 import Image from "next/image";
+import profile from "../../../public/assets/profile.png";
+import benefits1 from "../../../public/assets/stories.png";
 import { CTAButton, PrimaryButton } from "../reUsabale/buttons";
 import { Heading } from "../reUsabale/heading-title";
-import benefits1 from "../../../public/assets/stories.png";
-import profile from "../../../public/assets/profile.png";
 export const Stories = () => {
   const benefitsData = [
     {
@@ -45,9 +45,9 @@ export const Stories = () => {
 
         {/* Benefit Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full py-10">
-          {benefitsData.map((benefit, index) => (
+          {benefitsData.map((benefit) => (
             <div
-              key={index}
+              key={benefit.name}
               className="relative h-[380px] bg-[#FFFFFF] p-8 sm:p-10 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-xl flex flex-col items-start text-start"
             >
               <div className=" w-20 h-20 flex justify-center items-center mb-2">
@@ -79,7 +79,7 @@ export const Stories = () => {
         </div>
 
         <div className="mt-16">
-          <CTAButton text="Join the Growing Family of Churches" />
+          <CTAButton text="Join the Growing Family of Churches" href="/join" />
         </div>
       </div>
     </section>

@@ -1,17 +1,14 @@
 import type React from "react";
 
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import { OpportunityCard } from "./oppurtunityCard";
-import opurturnityImg from "../../../../public/assets/oppurtunityOne.jpg";
-import opurturnityImg1 from "../../../../public/assets/oppurtunityTwo.jpg";
 import { CTAButton, PrimaryButton } from "@/components/reUsabale/buttons";
 import { Heading } from "@/components/reUsabale/heading-title";
+import opurturnityImg from "../../../../public/assets/oppurtunityOne.jpg";
+import opurturnityImg1 from "../../../../public/assets/oppurtunityTwo.jpg";
+import { OpportunityCard } from "./oppurtunityCard";
 interface Opportunity {
   id: string;
   title: string;
   description: string;
-
   imageUrl: any;
   imageAlt: string;
 }
@@ -61,7 +58,7 @@ export const SpecialOpportunitySection: React.FC = () => {
 
         {/* CTA Button */}
         <div className="flex justify-center">
-          <CTAButton text="Don’t Miss My Church’s Chance" />
+          <CTAButton text="Don’t Miss My Church’s Chance" href="/join" />
         </div>
       </div>
     </section>

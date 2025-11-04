@@ -72,7 +72,7 @@ export default function FinalCallSection() {
 
         {/* CTA Button */}
         <div className="flex justify-center">
-          <CTAButton text="Yes, I Want My Church to Join ICSA" />
+          <CTAButton text="Yes, I Want My Church to Join ICSA" href="/join" />
         </div>
       </div>
     </section>

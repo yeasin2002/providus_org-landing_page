@@ -1,19 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import logo from "@/assets/logo.svg";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
-import logo from "../../../public/assets/logo2.svg";
+import { useState } from "react";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
     { name: "Home", href: "#home" },
-    { name: "Why Join", href: "#why-join", id: "#why" },
-    { name: "How It Works", href: "#how-it-works", id: "#how-it-works" },
-    { name: "Stories", href: "#stories", id: "#stories" },
-    { name: "FAQ", href: "#faq", id: "faq" },
-    { name: "Vision", href: "#vision", id: "vision" },
+    { name: "Why Join", href: "#why-join" },
+    { name: "How It Works", href: "#how-it-works" },
+    { name: "Stories", href: "#stories" },
+    { name: "FAQ", href: "#faq" },
+    { name: "Vision", href: "#vision" },
   ];
 
   return (
@@ -37,7 +37,7 @@ export const Navbar = () => {
           <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 space-x-8">
             {navLinks.map((link) => (
               <a
-                key={link.id}
+                key={link.name}
                 href={link.href}
                 className="text-white hover:text-yellow-400 transition-colors duration-200 text-[18px] font-medium"
               >
@@ -51,6 +51,7 @@ export const Navbar = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden text-white p-2 ml-auto"
             aria-label="Toggle menu"
+            type="button"
           >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>

@@ -1,7 +1,6 @@
-import React from "react";
-import { ArrowRight, Church } from "lucide-react";
-import visionImg from "../../../public/assets/vision.jpg";
+import { Church } from "lucide-react";
 import Image from "next/image";
+import visionImg from "../../../public/assets/vision.jpg";
 import { CTAButton, PrimaryButton } from "../reUsabale/buttons";
 export default function VisionHeroSection() {
   return (
@@ -37,7 +36,7 @@ export default function VisionHeroSection() {
             </div>
 
             {/* CTA Button */}
-            <CTAButton text="Share My Church’s Story Today" />
+            <CTAButton text="Share My Church’s Story Today" href="/join" />
           </div>
 
           {/* Image Section with Badge */}
@@ -59,6 +58,7 @@ export default function VisionHeroSection() {
                   className="absolute inset-0 w-full h-full border-white border-5 rounded-full"
                   viewBox="0 0 160 160"
                 >
+                  <title>SEARCH FOR A NEW LIFE • SEARCH FOR A NEW LIFE •</title>
                   <defs>
                     <path
                       id="circlePath"
