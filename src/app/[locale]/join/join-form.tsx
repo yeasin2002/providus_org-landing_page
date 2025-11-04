@@ -92,7 +92,7 @@ export const JoinFormSection = () => {
           email: data.email,
           token: existingChurch.id,
         });
-        return;
+        return       router.push("/thanks");
       }
 
       // New registration - create church record
