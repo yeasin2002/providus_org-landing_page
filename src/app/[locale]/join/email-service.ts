@@ -17,7 +17,6 @@ export const sendWelcomeEmail = async ({
     // Generate the program submission link with token
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     const programSubmissionLink = `${baseUrl}/en/upload/?token=${token}`;
-    
 
     // Generate HTML email
     const htmlContent = generateWelcomeEmail({
@@ -30,7 +29,11 @@ export const sendWelcomeEmail = async ({
     const response = await fetch("/api/email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({to: email,subject: `Welcome to ICSA, ${churchName}! 🎉`,html: htmlContent,}),
+      body: JSON.stringify({
+        to: email,
+        subject: `Welcome to ICSA, ${churchName}! 🎉`,
+        html: htmlContent,
+      }),
     });
 
     if (!response.ok) {
@@ -47,8 +50,6 @@ export const sendWelcomeEmail = async ({
     };
   }
 };
-
-
 
 //     const textContent = `
 // Dear ${contactName},

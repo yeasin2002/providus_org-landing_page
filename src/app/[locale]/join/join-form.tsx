@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { countries } from "@/data/countries-list";
 import { CTAButton } from "@/shared/buttons";
 import { FormInput } from "@/shared/form-input";
+import { supabase } from "@/utils/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -29,6 +30,9 @@ const workSteps = [
   "A few minutes here can mean lasting recognition for your church and real opportunities for your mission. Do it for your cause. Do it for your church.",
 ];
 
+
+
+
 export const JoinFormSection = () => {
   const router = useRouter();
   const {
@@ -46,11 +50,11 @@ export const JoinFormSection = () => {
   const [mathQuestion] = useState(generateMathQuestion());
 
   const onSubmit = async (data: JoinFormData) => {
-    try {
-      setSubmitAttempted(true);
-      setErrorMessage("");
-      setSuccessMessage("");
+    setSubmitAttempted(true);
+    setErrorMessage("");
+    setSuccessMessage("");
 
+    try {
       // Run spam protection checks
       const honeypotCheck = checkHoneypot(data);
       if (!honeypotCheck.isValid) {
@@ -75,35 +79,47 @@ export const JoinFormSection = () => {
         return;
       }
 
-      // Submit the form to database
-      const result = await submitChurchRegistration(data);
+      // check if email exist
+      const { data: isChurchesExist, error } = await supabase
+        .from("churches")
+        .select("*")
+        .eq("contact_email", data.email)
+        .single();
 
-      if (!result.success || !result.data) {
-        setErrorMessage(result.error || "Submission failed");
+      if (isChurchesExist && !error) {
+        setErrorMessage("Email already exists, Check your email");
         setSubmitAttempted(false);
+
+        const emailResult = await sendWelcomeEmail({
+          churchName: data.churchName,
+          contactName: data.primaryContact,
+          email: data.email,
+          token: isChurchesExist.id,
+        });
+
+        if (!emailResult.success) {
+          console.error("Email sending failed:", emailResult.error);
+        }
         return;
+      } else {
+        const result = await submitChurchRegistration(data);
+        if (result.success && result.data) {
+          setErrorMessage(result.error || "Submission failed");
+          setSubmitAttempted(false);
+          const emailResult = await sendWelcomeEmail({
+            churchName: data.churchName,
+            contactName: data.primaryContact,
+            email: data.email,
+            token: result?.data?.id,
+          });
+          if (!emailResult.success) {
+            console.error("Email sending failed:", emailResult.error);
+          }
+
+          return;
+        }
       }
 
-      // Send welcome email with program submission link
-      const emailResult = await sendWelcomeEmail({
-        churchName: data.churchName,
-        contactName: data.primaryContact,
-        email: data.email,
-        token: result.data.id,
-      });
-
-      if (!emailResult.success) {
-        console.error("Email sending failed:", emailResult.error);
-        // Don't fail the whole process if email fails
-        setSuccessMessage(
-          "Registration successful! However, there was an issue sending the email. Please contact support."
-        );
-        return;
-      }
-
-      setSuccessMessage(
-        "Registration successful! Check your email for next steps."
-      );
       router.push("/thanks");
     } catch (error) {
       console.error("Submission error:", error);

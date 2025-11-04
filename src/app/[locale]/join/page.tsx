@@ -2,20 +2,7 @@ import { FooterUpload } from "@/shared/footerUpload";
 import { HeroTopArea } from "@/shared/hero-top-area";
 import { JoinFormSection } from "./join-form";
 
-
-// async function getChurches() {
-//   const supabase = await createClient();
-//   const { data, error } = await supabase.from("churches").select("*");
-
-//   if (error) {
-//     console.error("Error fetching churches:", error);
-//     return [];
-//   }
-
-//   return data || [];
-// }
-
-export default async function JoinPage() {
+export default function JoinPage() {
   return (
     <div>
       <HeroTopArea

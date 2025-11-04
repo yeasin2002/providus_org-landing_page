@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/client";
+import { supabase } from "@/utils/supabase/client";
 
 import type { JoinFormData } from "./validation";
 
@@ -29,8 +29,6 @@ export const submitChurchRegistration = async (
       country: formData.country,
       language: "en",
     };
-
-    const supabase = createClient();
 
     const { data, error: insertError } = await supabase
       .from("churches")

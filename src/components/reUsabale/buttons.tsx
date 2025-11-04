@@ -11,13 +11,13 @@ export const CTAButton = ({ text, href }: Props) => {
   const Component: any = href ? Link : "button";
   return (
     <Component
-      className="bg-gold hover:bg-gold/90 text-white font-semibold px-6 py-2 rounded-full inline-flex items-center gap-4 transition-all hover:scale-95"
+      className="bg-gold hover:bg-yellow-500 text-white  pl-6 pr-1.5 py-2 rounded-full inline-flex items-center gap-4 transition-all hover:scale-90 font-montserrat font-bold text-lg"
       href={href}
       type={!href ? "button" : undefined}
     >
       <span>{text}</span>
-      <div className="bg-white p-3 flex  rounded-full  ">
-        <MoveUpRight className="w-5 h-5" color="black" />
+      <div className="bg-white p-2 flex  rounded-full  scale-110">
+        <MoveUpRight className="size-5" color="black" />
       </div>
     </Component>
   );
