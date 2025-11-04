@@ -56,70 +56,67 @@ export const JoinFormSection = () => {
 
     try {
       // Run spam protection checks
-      const honeypotCheck = checkHoneypot(data);
-      if (!honeypotCheck.isValid) {
-        setErrorMessage(honeypotCheck.errorMessage || "Invalid submission");
-        setSubmitAttempted(false);
-        return;
+      const spamChecks = [
+        checkHoneypot(data),
+        checkSubmitTime(formLoadTime),
+        checkMathAnswer(data.mathAnswer, mathQuestion.answer),
+      ];
+
+      for (const check of spamChecks) {
+        if (!check.isValid) {
+          setErrorMessage(check.errorMessage || "Invalid submission");
+          setSubmitAttempted(false);
+          return;
+        }
       }
 
-      const timeCheck = checkSubmitTime(formLoadTime);
-      if (!timeCheck.isValid) {
-        setErrorMessage(
-          timeCheck.errorMessage || "Please wait before submitting"
-        );
-        setSubmitAttempted(false);
-        return;
-      }
-
-      const mathCheck = checkMathAnswer(data.mathAnswer, mathQuestion.answer);
-      if (!mathCheck.isValid) {
-        setErrorMessage(mathCheck.errorMessage || "Incorrect answer");
-        setSubmitAttempted(false);
-        return;
-      }
-
-      // check if email exist
-      const { data: isChurchesExist, error } = await supabase
+      // Check if email already exists
+      const { data: existingChurch, error: fetchError } = await supabase
         .from("churches")
         .select("*")
         .eq("contact_email", data.email)
         .single();
 
-      if (isChurchesExist && !error) {
-        setErrorMessage("Email already exists, Check your email");
+      const churchExists = existingChurch && !fetchError;
+
+      if (churchExists) {
+        // Email already registered - resend welcome email
+        setErrorMessage(
+          "Email already exists. Check your email for the welcome message."
+        );
         setSubmitAttempted(false);
 
-        const emailResult = await sendWelcomeEmail({
+        await sendWelcomeEmail({
           churchName: data.churchName,
           contactName: data.primaryContact,
           email: data.email,
-          token: isChurchesExist.id,
+          token: existingChurch.id,
         });
-
-        if (!emailResult.success) {
-          console.error("Email sending failed:", emailResult.error);
-        }
         return;
-      } else {
-        const result = await submitChurchRegistration(data);
-        if (result.success && result.data) {
-          setErrorMessage(result.error || "Submission failed");
-          setSubmitAttempted(false);
-          const emailResult = await sendWelcomeEmail({
-            churchName: data.churchName,
-            contactName: data.primaryContact,
-            email: data.email,
-            token: result?.data?.id,
-          });
-          if (!emailResult.success) {
-            console.error("Email sending failed:", emailResult.error);
-          }
-
-          return;
-        }
       }
 
+      // New registration - create church record
+      const result = await submitChurchRegistration(data);
+
+      if (!result.success || !result.data) {
+        setErrorMessage(result.error || "Submission failed. Please try again.");
+        setSubmitAttempted(false);
+        return;
+      }
+
+      // Send welcome email to new church
+      const emailResult = await sendWelcomeEmail({
+        churchName: data.churchName,
+        contactName: data.primaryContact,
+        email: data.email,
+        token: result.data.id,
+      });
+
+      if (!emailResult.success) {
+        console.error("Email sending failed:", emailResult.error);
+      }
+
+      // Redirect to thank you page
       router.push("/thanks");
     } catch (error) {
       console.error("Submission error:", error);
