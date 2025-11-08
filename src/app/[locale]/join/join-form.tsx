@@ -13,11 +13,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { submitChurchRegistration } from "./actions";
 import { sendWelcomeEmail } from "./email-service";
-import {
-  checkHoneypot,
-  checkMathAnswer,
-  checkSubmitTime,
-} from "./spam-protection";
+import { checkMathAnswer, checkSubmitTime } from "./spam-protection";
 import {
   generateMathQuestion,
   joinSchema,
@@ -57,7 +53,6 @@ export const JoinFormSection = () => {
     try {
       // Run spam protection checks
       const spamChecks = [
-        checkHoneypot(data),
         checkSubmitTime(formLoadTime),
         checkMathAnswer(data.mathAnswer, mathQuestion.answer),
       ];
