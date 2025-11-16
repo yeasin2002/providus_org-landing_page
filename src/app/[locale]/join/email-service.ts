@@ -1,3 +1,4 @@
+// import { generateWelcomeEmailText } from "@/app/api/email/templates/welcome-email-text.email";
 import { generateWelcomeEmail } from "@/app/api/email/templates/welcome-email";
 
 interface SendWelcomeEmailParams {
@@ -19,7 +20,7 @@ export const sendWelcomeEmail = async ({
     const programSubmissionLink = `${baseUrl}/en/upload/?token=${token}`;
 
     // Generate HTML email
-    const htmlContent = generateWelcomeEmail({
+    const textContent = generateWelcomeEmail({
       churchName,
       contactName,
       programSubmissionLink,
@@ -32,7 +33,7 @@ export const sendWelcomeEmail = async ({
       body: JSON.stringify({
         to: email,
         subject: `Welcome to ICSA, ${churchName}! 🎉`,
-        html: htmlContent,
+        text: textContent,
       }),
     });
 
