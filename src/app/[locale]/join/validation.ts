@@ -9,9 +9,13 @@ export const joinSchema = z.object({
   country: z.string().min(2, "Please enter your country"),
   website: z.string().optional(), // Honeypot field
   mathAnswer: z.string().min(1, "Please answer the security question"),
+  gdpr: z.boolean().refine((val) => val === true, {
+    message: "You must agree to the GDPR terms",
+  }),
 });
 
 export type JoinFormData = z.infer<typeof joinSchema>;
+export type JoinFormDataExceptGdpr = Omit<JoinFormData, "gdpr">;
 
 // Generate simple math question
 export const generateMathQuestion = () => {

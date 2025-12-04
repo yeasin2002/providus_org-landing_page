@@ -2,6 +2,7 @@
 
 import startSharpIcon from "@/assets/star-sharp.svg";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { countries } from "@/data/countries-list";
 import { CTAButton } from "@/shared/buttons";
 import { FormInput } from "@/shared/form-input";
@@ -10,15 +11,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { submitChurchRegistration } from "./actions";
 import { sendWelcomeEmail } from "./email-service";
 import { checkMathAnswer, checkSubmitTime } from "./spam-protection";
-import {
-  generateMathQuestion,
-  joinSchema,
-  type JoinFormData,
-} from "./validation";
+
+import { Label } from "@/components/ui/label";
+import type { JoinFormData } from "./validation";
+import { generateMathQuestion, joinSchema } from "./validation";
 
 const workSteps = [
   "It doesn't take much to open new doors for your church. By joining the Alliance, your ministry becomes visible to people worldwide who are ready to support. ",
@@ -26,17 +26,18 @@ const workSteps = [
   "A few minutes here can mean lasting recognition for your church and real opportunities for your mission. Do it for your cause. Do it for your church.",
 ];
 
-
-
-
 export const JoinFormSection = () => {
   const router = useRouter();
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<JoinFormData>({
     resolver: zodResolver(joinSchema),
+    defaultValues: {
+      gdpr: false,
+    },
   });
 
   const [formLoadTime] = useState<number>(Date.now());
@@ -87,7 +88,7 @@ export const JoinFormSection = () => {
           email: data.email,
           token: existingChurch.id,
         });
-        return       router.push("/thanks");
+        return router.push("/thanks");
       }
 
       // New registration - create church record
@@ -215,6 +216,31 @@ export const JoinFormSection = () => {
             <p className="text-red-500 text-sm mt-1">
               {errors.country.message}
             </p>
+          )}
+        </div>
+
+        <div className="mb-8">
+          <Label htmlFor="gdpr" className="text-lg capitalize font-medium">
+            GDPR Text
+          </Label>
+          <div className="flex items-center gap-2">
+            <Controller
+              name="gdpr"
+              control={control}
+              render={({ field }) => (
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              )}
+            />
+            <span>
+              I agree to the processing of my data according to the Privacy
+              Policy and consent to being contacted by ICSA.
+            </span>
+          </div>
+          {errors.gdpr && (
+            <p className="text-red-500 text-sm mt-1">This field is required</p>
           )}
         </div>
 
