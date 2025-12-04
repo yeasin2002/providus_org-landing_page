@@ -6,7 +6,7 @@ import { CTAButton } from "../reUsabale/buttons";
 export const HeroSection = () => {
   return (
     <div>
-      <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
         <Image src={bgImg} alt="Background" fill className="object-cover" />
 
         {/* Black linear gradient overlay */}
@@ -20,7 +20,7 @@ export const HeroSection = () => {
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-20">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl  font-bold text-white leading-tight mb-6">
             Join the Alliance, tell your story, gain recognition, and connect
             with donors who want to support your church
           </h1>
